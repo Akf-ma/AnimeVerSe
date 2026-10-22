@@ -29,6 +29,52 @@ class DetailScreen extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
+    final Anime? anime = DummyData.animeList.cast<Anime?>().firstWhere(
+          (anime) => anime?.id == animeId,
+      orElse: () => null,
+    );
+    if (anime == null) {
+      return AppScaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.error_outline,
+                size: screenWidth * 0.2,
+                color: Colors.red,
+              ),
+              SizedBox(height: screenHeight * 0.02),
+              Text(
+                'Anime not found',
+                style: TextStyle(
+                  fontSize: screenWidth * 0.05,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.01),
+              Text(
+                'ID: $animeId',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: screenWidth * 0.04,
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.03),
+              ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF0b395e),
+                ),
+                child: const Text('Go Back'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return AppScaffold(
       body: CustomScrollView(
         slivers: [

@@ -3,25 +3,26 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../config/routes.dart';
 import '../widgets/app_scaffold.dart';
-import 'home_screen.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return AppScaffold(
       body: LayoutBuilder(
           builder: (context, constraints) {
             final isLargeScreen = constraints.maxWidth > 600;
             final maxWidth = isLargeScreen ? 400.0 : constraints.maxWidth;
+            // Semua ukuran font/padding mengikuti lebar form, bukan lebar layar,
+            // supaya layout tetap rapi di layar lebar (desktop/web).
+            final formWidth = maxWidth;
             return SingleChildScrollView(
               child: Center(
                 child: Container(
                   width: maxWidth,
-                  padding: EdgeInsets.all(screenWidth * 0.06),
+                  padding: EdgeInsets.all(formWidth * 0.06),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -36,7 +37,7 @@ class SignInScreen extends StatelessWidget {
                       Text(
                         'Welcome Back!',
                         style: TextStyle(
-                          fontSize: screenWidth * (isLargeScreen ? 0.06 : 0.1),
+                          fontSize: formWidth * (isLargeScreen ? 0.06 : 0.1),
                           fontWeight: FontWeight.w800,
                           color: Colors.white,
                         ),
@@ -48,7 +49,7 @@ class SignInScreen extends StatelessWidget {
                       Text(
                         'Sign in to continue your anime journey',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.035,
+                          fontSize: formWidth * 0.035,
                           fontWeight: FontWeight.w500,
                           color: Colors.white70,
                         ),
@@ -62,27 +63,27 @@ class SignInScreen extends StatelessWidget {
                         decoration: InputDecoration(
                           labelText: 'Email',
                           labelStyle: TextStyle(
-                            fontSize: screenWidth * 0.04,
+                            fontSize: formWidth * 0.04,
                             color: Colors.white70,
                           ),
                           filled: true,
                           fillColor: Colors.white.withValues(alpha: 0.1),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                            borderRadius: BorderRadius.circular(formWidth * 0.03),
                             borderSide: BorderSide.none,
                           ),
                           prefixIcon: Icon(
                             Icons.email,
                             color: Colors.white70,
-                            size: screenWidth * 0.06,
+                            size: formWidth * 0.06,
                           ),
                           contentPadding: EdgeInsets.symmetric(
                             vertical: screenHeight * 0.025,
-                            horizontal: screenWidth * 0.055,
+                            horizontal: formWidth * 0.055,
                           ),
                         ),
                         style: TextStyle(
-                          fontSize: screenWidth * 0.04,
+                          fontSize: formWidth * 0.04,
                           color: Colors.white,
                         ),
                         keyboardType: TextInputType.emailAddress,
@@ -95,32 +96,32 @@ class SignInScreen extends StatelessWidget {
                         decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: TextStyle(
-                            fontSize: screenWidth * 0.04,
+                            fontSize: formWidth * 0.04,
                             color: Colors.white70,
                           ),
                           filled: true,
                           fillColor: Colors.white.withValues(alpha: 0.1),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                            borderRadius: BorderRadius.circular(formWidth * 0.03),
                             borderSide: BorderSide.none,
                           ),
                           prefixIcon: Icon(
                             Icons.lock_outline,
                             color: Colors.white70,
-                            size: screenWidth * 0.06,
+                            size: formWidth * 0.06,
                           ),
                           suffixIcon: Icon(
                             Icons.visibility_off_outlined,
                             color: Colors.white70,
-                            size: screenWidth * 0.06,
+                            size: formWidth * 0.06,
                           ),
                           contentPadding: EdgeInsets.symmetric(
                             vertical: screenHeight * 0.025,
-                            horizontal: screenWidth * 0.055,
+                            horizontal: formWidth * 0.055,
                           ),
                         ),
                         style: TextStyle(
-                          fontSize: screenWidth * 0.04,
+                          fontSize: formWidth * 0.04,
                           color: Colors.white,
                         ),
                         obscureText: true,
@@ -134,7 +135,7 @@ class SignInScreen extends StatelessWidget {
                           child: Text(
                             'Forgot Password?',
                             style: TextStyle(
-                              fontSize: screenWidth * 0.035,
+                              fontSize: formWidth * 0.035,
                               color: Colors.blue.shade300,
                             ),
                           ),
@@ -153,21 +154,22 @@ class SignInScreen extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             // TODO: Implement sign in functionality
+                            // Cukup satu navigasi lewat go_router agar tidak
+                            // terjadi konflik dengan Navigator bawaan.
                             context.go(AppRoutes.home);
-
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue.withValues(alpha: 0.8),
                             foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                              borderRadius: BorderRadius.circular(formWidth * 0.03),
                             ),
                             elevation: 5,
                           ),
                           child: Text(
                             'Sign In',
                             style: TextStyle(
-                              fontSize: screenWidth * 0.045,
+                              fontSize: formWidth * 0.045,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -186,11 +188,11 @@ class SignInScreen extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
+                            padding: EdgeInsets.symmetric(horizontal: formWidth * 0.03),
                             child: Text(
                               'or',
                               style: TextStyle(
-                                fontSize: screenWidth * 0.035,
+                                fontSize: formWidth * 0.035,
                                 color: Colors.white70,
                               ),
                             ),
@@ -215,13 +217,13 @@ class SignInScreen extends StatelessWidget {
                           },
                           icon: SvgPicture.asset(
                             'assets/images/google_icon.svg',
-                            height: screenWidth * 0.06,
-                            width: screenWidth * 0.06,
+                            height: formWidth * 0.06,
+                            width: formWidth * 0.06,
                           ),
                           label: Text(
                             'Continue with Google',
                             style: TextStyle(
-                              fontSize: screenWidth * 0.04,
+                              fontSize: formWidth * 0.04,
                               fontWeight: FontWeight.w500,
                               color: Colors.white,
                             ),
@@ -229,7 +231,7 @@ class SignInScreen extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black45,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                              borderRadius: BorderRadius.circular(formWidth * 0.03),
                               side: BorderSide(
                                 color: Colors.black45,
                                 width: 1,
@@ -243,13 +245,14 @@ class SignInScreen extends StatelessWidget {
                       SizedBox(height: screenHeight * 0.04),
 
                       // Sign up link
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Text(
                             "Don't have an account? ",
                             style: TextStyle(
-                              fontSize: screenWidth * 0.04,
+                              fontSize: formWidth * 0.04,
                               color: Colors.white70,
                             ),
                           ),
@@ -261,7 +264,7 @@ class SignInScreen extends StatelessWidget {
                             child: Text(
                               'Sign Up',
                               style: TextStyle(
-                                fontSize: screenWidth * 0.04,
+                                fontSize: formWidth * 0.04,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.blue.shade300,
                               ),

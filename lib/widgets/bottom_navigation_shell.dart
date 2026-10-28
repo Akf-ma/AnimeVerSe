@@ -1,5 +1,6 @@
 import 'package:anime_verse/config/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 class BottomNavigationShell extends StatelessWidget {
@@ -31,13 +32,12 @@ class BottomNavigationShell extends StatelessWidget {
         final String currentLocation = GoRouterState.of(context).uri.path;
 
         if (currentLocation == AppRoutes.home) {
-          Navigator.of(context).pop();
+          // Di halaman utama tidak ada route untuk di-pop, jadi keluar aplikasi.
+          await SystemNavigator.pop();
+        } else if (GoRouter.of(context).canPop()) {
+          GoRouter.of(context).pop();
         } else {
-          if (GoRouter.of(context).canPop()) {
-            GoRouter.of(context).pop();
-          } else {
-            context.go(AppRoutes.home);
-          }
+          context.go(AppRoutes.home);
         }
       },
       child: SafeArea(
